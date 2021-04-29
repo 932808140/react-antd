@@ -1,0 +1,8 @@
+.yqSider :hover {
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* background: #fff;
+  height: 100%;
+  position: fixed;
+  left: 0; */
+}

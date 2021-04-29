@@ -1,6 +1,7 @@
-import { FC } from 'react';
+import { FC, useRef } from 'react';
 import { Link } from 'umi';
 import { Layout, Menu } from 'antd';
+//import '../pages/index.css';
 
 const { Content, Sider } = Layout;
 
@@ -21,12 +22,20 @@ const LayoutsIndex: FC = (props) => {
           onCollapse={(collapsed, type) => {
             console.log(collapsed, type);
           }}
-          style={{ background: '#fff', height: '100%' }}
+          className={'yqSider'}
+          style={{
+            background: '#fff',
+            height: '100%',
+            position: 'fixed',
+            left: 0,
+            overflowY: 'auto',
+            overflowX: 'hidden',
+          }}
         >
           <Menu
             theme="light"
             mode="inline"
-            defaultSelectedKeys={['11']}
+            defaultSelectedKeys={['16']}
             style={{ height: '100%' }}
           >
             <Menu.Item key="1">
@@ -62,13 +71,27 @@ const LayoutsIndex: FC = (props) => {
             <Menu.Item key="11">
               <Link to="/treeSelect">TreeSelect 树选择</Link>
             </Menu.Item>
-            <Menu.Item key="12">nav 12</Menu.Item>
+            <Menu.Item key="12">
+              <Link to="/autoComplete">AutoComplete 自动完成</Link>
+            </Menu.Item>
+            <Menu.Item key="13">
+              <Link to="/cascader">Cascader 级联选择</Link>
+            </Menu.Item>
+            <Menu.Item key="14">
+              <Link to="/checkbox">Checkbox 多选框</Link>
+            </Menu.Item>
+            <Menu.Item key="15">
+              <Link to="/datePicker">DatePicker 日期选择框</Link>
+            </Menu.Item>
+            <Menu.Item key="16">
+              <Link to="/table">Table 表格</Link>
+            </Menu.Item>
           </Menu>
         </Sider>
         <Layout>
-          <Content style={{ margin: '24px 16px 0' }}>
+          <Content style={{ margin: '24px 180px 0' }}>
             <div
-              className="site-layout-background"
+              //className="site-layout-background"
               style={{ padding: 24, minHeight: 360 }}
             >
               {children}
