@@ -23,7 +23,6 @@
     "@ant-design/icons": "^4.6.2",
     "@ant-design/pro-layout": "^6.5.0",
     "@umijs/preset-react": "1.x",
-    "@yunbao/react-ui": "^0.7.2",
     "react-sortable-hoc": "^2.0.0",
     "umi": "^3.4.7"
   },

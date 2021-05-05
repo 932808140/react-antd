@@ -7,6 +7,15 @@ export default function IndexPage() {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
+      align: 'center',
+      className: 'yq123',
+      colSpan: 1,
+      //defaultFilteredValue:['Jim Green']
+      //defaultSortOrder:'descend'
+      editable: true,
+      // filterDropdown:(<>123</>),
+      // filterDropdownVisible:true,
+      //filtered:true
     },
     {
       title: 'Age',
@@ -17,6 +26,7 @@ export default function IndexPage() {
       title: 'Address',
       dataIndex: 'address',
       key: 'address',
+      align: 'center',
     },
     {
       title: 'Tags',
@@ -53,6 +63,7 @@ export default function IndexPage() {
     {
       key: '1',
       name: 'John Brown',
+      //name2:'John Brown2',
       age: 32,
       address: 'New York No. 1 Lake Park',
       tags: ['nice', 'developer'],
@@ -60,6 +71,7 @@ export default function IndexPage() {
     {
       key: '2',
       name: 'Jim Green',
+      //name2:'John Brown2',
       age: 42,
       address: 'London No. 1 Lake Park',
       tags: ['loser'],
@@ -67,6 +79,7 @@ export default function IndexPage() {
     {
       key: '3',
       name: 'Joe Black',
+      //name2:'John Brown2',
       age: 32,
       address: 'Sidney No. 1 Lake Park',
       tags: ['cool', 'teacher'],
@@ -93,9 +106,11 @@ export default function IndexPage() {
         rowClassName={(record: any, index: any) => {
           return 'yq' + '-' + index;
         }}
+        //rowKey={'11'}
         rowSelection={{
           type: 'checkbox',
           // columnTitle: <>自定义列表选择框标题</>,
+          columnWidth: '100px',
           hideSelectAll: false,
           renderCell: (
             value: boolean,
@@ -118,6 +133,10 @@ export default function IndexPage() {
             );
           },
           defaultSelectedRowKeys: ['1'],
+          selections: [
+            { key: '1', text: '名字' },
+            { key: '2', text: '年龄' },
+          ],
           onChange: (selectedRowKeys: any, selectedRows: any) => {
             //console.log(selectedRowKeys, selectedRows);
           },
@@ -146,10 +165,31 @@ export default function IndexPage() {
           return <>总结栏：</>;
         }}
         title={(currentPageData: any) => {
-          console.log(currentPageData);
+          //console.log(currentPageData);
           return <>表格标题</>;
         }}
         tableLayout={'auto'}
+        onChange={(pagination: any, filters: any, sorter: any, extra: any) => {
+          // console.log(pagination,filters,sorter,extra);
+        }}
+        onHeaderRow={(columns, index) => {
+          // console.log(columns,index);
+          return {
+            onClick: () => {
+              console.log('点击了表头');
+            }, // 点击表头行
+          };
+        }}
+        onRow={(record) => {
+          //console.log(record);
+          return {
+            onClick: (event) => {}, // 点击行
+            onDoubleClick: (event) => {},
+            onContextMenu: (event) => {},
+            onMouseEnter: (event) => {}, // 鼠标移入行
+            onMouseLeave: (event) => {},
+          };
+        }}
       />
     </>
   );
