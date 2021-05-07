@@ -1,7 +1,9 @@
-import React from 'react';
-import { Table, Tag, Space } from 'antd';
+import React, { useState } from 'react';
+import { Table, Tag, Space, Button } from 'antd';
+import { FilterOutlined, FilterTwoTone } from '@ant-design/icons';
 
 export default function IndexPage() {
+  const [selectedRowKeys, setSelectedRowKeys] = useState<any>([]);
   const columns = [
     {
       title: 'Name',
@@ -16,6 +18,49 @@ export default function IndexPage() {
       // filterDropdown:(<>123</>),
       // filterDropdownVisible:true,
       //filtered:true
+      filters: [
+        {
+          text: 'Joe',
+          value: 'Joe',
+        },
+        {
+          text: 'Jim',
+          value: 'Jim',
+        },
+        {
+          text: 'Green',
+          value: 'Green',
+        },
+        {
+          text: 'Submenu',
+          value: 'Submenu',
+          children: [
+            {
+              text: 'Green2',
+              value: 'Green2',
+            },
+            {
+              text: 'Black',
+              value: 'Black',
+            },
+          ],
+        },
+      ],
+      onFilter: (value: any, record: any) => record.name.indexOf(value) != -1,
+      onFilterDropdownVisibleChange: (visible: any) => {
+        console.log('发生变化了', visible);
+      },
+      filterIcon: (
+        <>
+          <FilterOutlined />
+        </>
+      ),
+      // filterDropdown:(props:any)=>{
+      //   console.log(props)
+      //   return (<>{{props}}</>)
+      // }
+      filtered: false,
+      filterMultiple: false,
     },
     {
       title: 'Age',
@@ -85,6 +130,11 @@ export default function IndexPage() {
       tags: ['cool', 'teacher'],
     },
   ];
+  //选中后清除
+  const handleSelectClear = () => {
+    console.log(selectedRowKeys);
+    setSelectedRowKeys([]);
+  };
   return (
     <>
       <Table
@@ -132,13 +182,16 @@ export default function IndexPage() {
               </>
             );
           },
-          defaultSelectedRowKeys: ['1'],
+          selectedRowKeys: selectedRowKeys,
+          //defaultSelectedRowKeys: ['1'],
           selections: [
+            Table.SELECTION_ALL,
             { key: '1', text: '名字' },
             { key: '2', text: '年龄' },
           ],
           onChange: (selectedRowKeys: any, selectedRows: any) => {
             //console.log(selectedRowKeys, selectedRows);
+            setSelectedRowKeys(selectedRowKeys);
           },
           onSelect: (
             record: any,
@@ -166,7 +219,11 @@ export default function IndexPage() {
         }}
         title={(currentPageData: any) => {
           //console.log(currentPageData);
-          return <>表格标题</>;
+          return (
+            <>
+              <Button onClick={handleSelectClear}>选中后清除</Button>
+            </>
+          );
         }}
         tableLayout={'auto'}
         onChange={(pagination: any, filters: any, sorter: any, extra: any) => {
