@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Table, Tag, Space, Button } from 'antd';
-import { FilterOutlined, FilterTwoTone } from '@ant-design/icons';
+import { Table, Tag, Space, Button, Input } from 'antd';
+import { FilterOutlined, SearchOutlined } from '@ant-design/icons';
 
 export default function IndexPage() {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any>([]);
+  const [searchData, setSearchData] = useState<any>();
   const columns = [
     {
       title: 'Name',
@@ -55,10 +56,6 @@ export default function IndexPage() {
           <FilterOutlined />
         </>
       ),
-      // filterDropdown:(props:any)=>{
-      //   console.log(props)
-      //   return (<>{{props}}</>)
-      // }
       filtered: false,
       filterMultiple: false,
     },
@@ -76,6 +73,46 @@ export default function IndexPage() {
       dataIndex: 'address',
       key: 'address',
       align: 'center',
+      filterDropdown: (props: any) => {
+        return (
+          <div style={{ padding: 8 }}>
+            <Input
+              style={{ width: 188, marginBottom: 8, display: 'block' }}
+              placeholder={'搜索地址'}
+              onChange={(e: any) => {
+                setSearchData(e.target.value);
+              }}
+            />
+            <Space>
+              <Button
+                type="primary"
+                icon={<SearchOutlined />}
+                size="small"
+                style={{ width: 90 }}
+                onClick={() => {
+                  //.log(searchData);
+                }}
+              >
+                搜索
+              </Button>
+              <Button size="small" style={{ width: 90 }}>
+                重置
+              </Button>
+              <Button type="link" size="small">
+                过滤
+              </Button>
+            </Space>
+          </div>
+        );
+      },
+      onFilter: (value: any, record: any) => {
+        return record.address.indexOf(searchData) != -1;
+      },
+      filterIcon: (
+        <>
+          <SearchOutlined />
+        </>
+      ),
     },
     {
       title: 'Tags',
@@ -237,7 +274,7 @@ export default function IndexPage() {
           // console.log(columns,index);
           return {
             onClick: () => {
-              console.log('点击了表头');
+              //console.log('点击了表头');
             }, // 点击表头行
           };
         }}
