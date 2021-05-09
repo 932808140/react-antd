@@ -1,10 +1,89 @@
 import React, { useState } from 'react';
 import { Table, Tag, Space, Button, Input } from 'antd';
 import { FilterOutlined, SearchOutlined } from '@ant-design/icons';
+import Highlighter from 'react-highlight-words';
 
 export default function IndexPage() {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any>([]);
-  const [searchData, setSearchData] = useState<any>();
+  const [searchText, setSearchText] = useState<any>();
+  const [searchedColumn, setSearchedColumn] = useState<any>();
+  //搜索方法
+  const handleSearch = (selectedKeys: any, confirm: any, dataIndex: any) => {
+    //confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+  const getColumnSearchProps = (dataIndex: any) => {
+    let searchInput: any;
+    return {
+      filterDropdown: (props: any) => {
+        //console.log(props);
+        return (
+          <div style={{ padding: 8 }}>
+            <Input
+              // ref={node => {
+              //   searchInput = node;
+              // }}
+              value={props.selectedKeys[0]}
+              style={{ width: 188, marginBottom: 8, display: 'block' }}
+              placeholder={'搜索地址'}
+              onChange={(e: any) => {
+                props.setSelectedKeys(e.target.value ? [e.target.value] : []);
+              }}
+            />
+            <Space>
+              <Button
+                type="primary"
+                icon={<SearchOutlined />}
+                size="small"
+                style={{ width: 90 }}
+                onClick={() =>
+                  handleSearch(props.selectedKeys, confirm, dataIndex)
+                }
+              >
+                搜索
+              </Button>
+              <Button size="small" style={{ width: 90 }}>
+                重置
+              </Button>
+              <Button type="link" size="small">
+                过滤
+              </Button>
+            </Space>
+          </div>
+        );
+      },
+      onFilter: (value: any, record: any) =>
+        record[dataIndex]
+          ? record[dataIndex]
+              .toString()
+              .toLowerCase()
+              .includes(value.toLowerCase())
+          : '',
+      onFilterDropdownVisibleChange: (visible: any) => {
+        if (visible) {
+          //setTimeout(() => searchInput.select(), 100);
+          return false;
+        }
+      },
+      render: (text: any) =>
+        searchedColumn === dataIndex ? (
+          <Highlighter
+            highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+            searchWords={[searchText]}
+            autoEscape
+            textToHighlight={text ? text.toString() : ''}
+          />
+        ) : (
+          text
+        ),
+      filterIcon: (
+        <>
+          <SearchOutlined />
+        </>
+      ),
+    };
+  };
   const columns = [
     {
       title: 'Name',
@@ -47,7 +126,10 @@ export default function IndexPage() {
           ],
         },
       ],
-      onFilter: (value: any, record: any) => record.name.indexOf(value) != -1,
+      onFilter: (value: any, record: any) => {
+        console.log(record);
+        return record.name.indexOf(value) != -1;
+      },
       onFilterDropdownVisibleChange: (visible: any) => {
         console.log('发生变化了', visible);
       },
@@ -73,46 +155,7 @@ export default function IndexPage() {
       dataIndex: 'address',
       key: 'address',
       align: 'center',
-      filterDropdown: (props: any) => {
-        return (
-          <div style={{ padding: 8 }}>
-            <Input
-              style={{ width: 188, marginBottom: 8, display: 'block' }}
-              placeholder={'搜索地址'}
-              onChange={(e: any) => {
-                setSearchData(e.target.value);
-              }}
-            />
-            <Space>
-              <Button
-                type="primary"
-                icon={<SearchOutlined />}
-                size="small"
-                style={{ width: 90 }}
-                onClick={() => {
-                  //.log(searchData);
-                }}
-              >
-                搜索
-              </Button>
-              <Button size="small" style={{ width: 90 }}>
-                重置
-              </Button>
-              <Button type="link" size="small">
-                过滤
-              </Button>
-            </Space>
-          </div>
-        );
-      },
-      onFilter: (value: any, record: any) => {
-        return record.address.indexOf(searchData) != -1;
-      },
-      filterIcon: (
-        <>
-          <SearchOutlined />
-        </>
-      ),
+      ...getColumnSearchProps('address'),
     },
     {
       title: 'Tags',
