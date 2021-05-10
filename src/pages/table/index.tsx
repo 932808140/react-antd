@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, Tag, Space, Button, Input } from 'antd';
+import { Table, Tag, Space, Button, Input, Form } from 'antd';
 import { FilterOutlined, SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 
@@ -7,60 +7,97 @@ export default function IndexPage() {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any>([]);
   const [searchText, setSearchText] = useState<any>();
   const [searchedColumn, setSearchedColumn] = useState<any>();
+  const [searchKey, setSearchKey] = useState<any>(); //表单查询搜索关键字
+  const [form] = Form.useForm(); //表单
+  const data: any[] = [
+    {
+      key: '1',
+      name: 'John Brown',
+      //name2:'John Brown2',
+      age: 32,
+      address: 'New York No. 1 Lake Park',
+      tags: ['nice', 'developer'],
+    },
+    {
+      key: '2',
+      name: 'Jim Green',
+      //name2:'John Brown2',
+      age: 42,
+      address: 'London No. 1 Lake Park',
+      tags: ['loser'],
+    },
+    {
+      key: '3',
+      name: 'Joe Black',
+      //name2:'John Brown2',
+      age: 22,
+      address: 'Sidney No. 1 Lake Park',
+      tags: ['cool', 'teacher'],
+    },
+  ];
+  const [dataSource, setDataSource] = useState<any>(data); //表格数据
   //搜索方法
   const handleSearch = (selectedKeys: any, confirm: any, dataIndex: any) => {
     //confirm();
     setSearchText(selectedKeys[0]);
     setSearchedColumn(dataIndex);
   };
+  //表单查询方法
+  const onFinish = (values: any, dataIndex: any) => {
+    let dataSourcTemp: any[] = [];
+    data.map((item: any) => {
+      if (item.address.indexOf(values.searchKey) != -1)
+        dataSourcTemp.push(item);
+    });
+    setDataSource(dataSourcTemp);
+    setSearchText(values.searchKey);
+    setSearchedColumn(dataIndex);
+  };
+  //表单重置的方法
+  const handleReset = () => {
+    setDataSource(data);
+    setSearchText('');
+    setSearchedColumn('');
+    form.setFieldsValue({ searchKey: '' });
+  };
   const getColumnSearchProps = (dataIndex: any) => {
-    let searchInput: any;
     return {
       filterDropdown: (props: any) => {
         //console.log(props);
         return (
           <div style={{ padding: 8 }}>
-            <Input
-              // ref={node => {
-              //   searchInput = node;
-              // }}
-              value={props.selectedKeys[0]}
-              style={{ width: 188, marginBottom: 8, display: 'block' }}
-              placeholder={'搜索地址'}
-              onChange={(e: any) => {
-                props.setSelectedKeys(e.target.value ? [e.target.value] : []);
+            <Form
+              onFinish={(values: any) => {
+                onFinish(values, dataIndex);
               }}
-            />
-            <Space>
+              style={{ position: 'relative' }}
+              form={form}
+            >
+              <Form.Item name="searchKey">
+                <Input
+                  placeholder={'请输入你要查询的内容...'}
+                  allowClear={true}
+                />
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
+                  查询
+                </Button>
+              </Form.Item>
               <Button
                 type="primary"
-                icon={<SearchOutlined />}
-                size="small"
-                style={{ width: 90 }}
-                onClick={() =>
-                  handleSearch(props.selectedKeys, confirm, dataIndex)
-                }
+                style={{ position: 'absolute', right: '2px', bottom: '0px' }}
+                onClick={handleReset}
               >
-                搜索
-              </Button>
-              <Button size="small" style={{ width: 90 }}>
                 重置
               </Button>
-              <Button type="link" size="small">
-                过滤
-              </Button>
-            </Space>
+            </Form>
           </div>
         );
       },
       onFilter: (value: any, record: any) =>
-        record[dataIndex]
-          ? record[dataIndex]
-              .toString()
-              .toLowerCase()
-              .includes(value.toLowerCase())
-          : '',
-      onFilterDropdownVisibleChange: (visible: any) => {
+        record.dataIndex.indexOf(searchKey) != -1,
+      onFilterDropdownVisibleChange: (visible: any, dataIndex: any) => {
         if (visible) {
           //setTimeout(() => searchInput.select(), 100);
           return false;
@@ -127,7 +164,7 @@ export default function IndexPage() {
         },
       ],
       onFilter: (value: any, record: any) => {
-        console.log(record);
+        //console.log(record);
         return record.name.indexOf(value) != -1;
       },
       onFilterDropdownVisibleChange: (visible: any) => {
@@ -188,32 +225,7 @@ export default function IndexPage() {
       ),
     },
   ];
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      //name2:'John Brown2',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      //name2:'John Brown2',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      //name2:'John Brown2',
-      age: 22,
-      address: 'Sidney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ];
+
   //选中后清除
   const handleSelectClear = () => {
     console.log(selectedRowKeys);
@@ -223,7 +235,7 @@ export default function IndexPage() {
     <>
       <Table
         columns={columns}
-        dataSource={data}
+        dataSource={dataSource}
         bordered={true}
         footer={(currentPageData: any) => {
           let nameAll: any[] = [];
