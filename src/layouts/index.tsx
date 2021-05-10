@@ -87,7 +87,7 @@ const LayoutsIndex: FC = (props) => {
               <Link to="/table">Table 表格</Link>
             </Menu.Item>
             <Menu.Item key="17">
-              <Link to="/tableCustomFilter">Table 表格-自定义筛选菜单</Link>
+              <Link to="/tableAjax">Table 表格-远程加载数据</Link>
             </Menu.Item>
           </Menu>
         </Sider>
