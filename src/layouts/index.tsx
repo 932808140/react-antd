@@ -35,7 +35,7 @@ const LayoutsIndex: FC = (props) => {
           <Menu
             theme="light"
             mode="inline"
-            defaultSelectedKeys={['20']}
+            defaultSelectedKeys={['21']}
             style={{ height: '100%' }}
           >
             <Menu.Item key="1">
@@ -97,6 +97,9 @@ const LayoutsIndex: FC = (props) => {
             </Menu.Item>
             <Menu.Item key="20">
               <Link to="/tableTreeData">Table 表格-树形数据展示</Link>
+            </Menu.Item>
+            <Menu.Item key="21">
+              <Link to="/editable">Table 表格-可编辑表格</Link>
             </Menu.Item>
           </Menu>
         </Sider>
