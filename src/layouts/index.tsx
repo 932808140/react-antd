@@ -101,6 +101,9 @@ const LayoutsIndex: FC = (props) => {
             <Menu.Item key="21">
               <Link to="/editable">Table 表格-可编辑表格</Link>
             </Menu.Item>
+            <Menu.Item key="22">
+              <Link to="/tableNested">Table 表格-嵌套子表格</Link>
+            </Menu.Item>
           </Menu>
         </Sider>
         <Layout>
