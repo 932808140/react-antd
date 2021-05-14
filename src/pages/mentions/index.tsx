@@ -1,5 +1,5 @@
 import { FolderOpenOutlined } from '@ant-design/icons';
-import { Mentions, Button } from 'antd';
+import { Button, Mentions } from 'antd';
 import React, { useRef, useState } from 'react';
 export default function IndexPage() {
   const mentionsRef = useRef<any>();
