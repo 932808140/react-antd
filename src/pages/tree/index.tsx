@@ -111,7 +111,7 @@ export default function IndexPage() {
         showIcon={true}
         multiple={false}
         //selectable={false}
-        showLine={true}
+        showLine={{ showLeafIcon: false }}
         //switcherIcon={<DownSquareOutlined />}
         // titleRender={(nodeData:any)=>{
         //   console.log(nodeData);
