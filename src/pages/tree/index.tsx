@@ -1,19 +1,32 @@
-import { PlusOutlined, QuestionOutlined } from '@ant-design/icons';
+import {
+  DownSquareOutlined,
+  InboxOutlined,
+  MailOutlined,
+  MedicineBoxOutlined,
+} from '@ant-design/icons';
 import { Tree } from 'antd';
 import { DataNode } from 'antd/lib/tree';
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function IndexPage() {
+  const [selected, setSelected] = useState<string>('letter');
+  const { DirectoryTree } = Tree;
   const treeData = [
     {
       title: '收件箱',
       key: 'inbox',
       selectable: false,
       checkable: false,
+      icon: (
+        <>
+          <InboxOutlined style={{ fontSize: '19px' }} />
+        </>
+      ),
       children: [
         {
           title: '家书',
           key: 'letter',
+          //isLeaf: false,
         },
         {
           title: '朋友',
@@ -30,6 +43,11 @@ export default function IndexPage() {
       key: 'outbox',
       selectable: false,
       checkable: false,
+      icon: (
+        <>
+          <MedicineBoxOutlined style={{ fontSize: '17px' }} />
+        </>
+      ),
       children: [
         {
           title: '垃圾邮件',
@@ -61,6 +79,7 @@ export default function IndexPage() {
   //点击树节点触发
   const onSelect = (selectedKeys: any, e: any) => {
     console.log(selectedKeys, e);
+    setSelected(e.node.key);
   };
   return (
     <>
@@ -74,7 +93,7 @@ export default function IndexPage() {
         // }}
         autoExpandParent={true}
         checkable={true}
-        //defaultExpandAll={true}
+        defaultExpandAll={true}
         //defaultExpandedKeys={['outbox']}
         //defaultExpandParent={false}
         //disabled={true}
@@ -88,16 +107,18 @@ export default function IndexPage() {
           return true;
         }}
         //height={100}
-        icon={<PlusOutlined />}
+        icon={<MailOutlined />}
         showIcon={true}
-        multiple={true}
+        multiple={false}
         //selectable={false}
         showLine={true}
-        switcherIcon={<QuestionOutlined />}
+        //switcherIcon={<DownSquareOutlined />}
         // titleRender={(nodeData:any)=>{
         //   console.log(nodeData);
         //   return 1
         // }}
+        //defaultSelectedKeys={[selected]}
+        selectedKeys={[selected]}
         onCheck={onCheck}
         onDrop={onDrop}
         onExpand={onExpand}
