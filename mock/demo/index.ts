@@ -1,0 +1,48 @@
+export default {
+  // 应用列表
+  'POST /app/system/listByCurrentTenantUser': {
+    code: '00000',
+    message: '执行成功',
+    data: [
+      {
+        recordVersion: 1,
+        recordStatus: 1,
+        systemId: '5679540198318592',
+        systemName: '应用中心',
+        systemCode: 'app',
+        systemInfo: '应用中心',
+        activeState: true,
+        systemVersion: null,
+        productManager: null,
+        email: null,
+        phone: null,
+      },
+      {
+        recordVersion: 2,
+        recordStatus: 1,
+        systemId: '10725126043936768',
+        systemName: 'ECMIS',
+        systemCode: 'ecmis',
+        systemInfo: 'ecmis工程',
+        activeState: true,
+        systemVersion: null,
+        productManager: null,
+        email: null,
+        phone: null,
+      },
+      {
+        recordVersion: 0,
+        recordStatus: 1,
+        systemId: '22375723050289664',
+        systemName: '营运管理',
+        systemCode: 'mkt',
+        systemInfo: null,
+        activeState: true,
+        systemVersion: null,
+        productManager: null,
+        email: null,
+        phone: null,
+      },
+    ],
+  },
+};
