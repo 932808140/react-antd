@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 //组件
 import { InboxOutlined, MedicineBoxOutlined } from '@ant-design/icons';
-import { Input, Tree } from 'antd';
+import { Button, Input, Tree } from 'antd';
 //样式
 import './index.css';
 
@@ -110,6 +110,37 @@ export default function IndexPage() {
         key: item.key,
       };
     });
+  //自定义渲染节点
+  const titleRender = (nodeData: any) => {
+    if (nodeData.key === 'inbox') {
+      return (
+        <>
+          {nodeData.title}
+          <Button size={'small'} style={{ marginLeft: '15px' }}>
+            inbox按钮
+          </Button>
+        </>
+      );
+    } else if (nodeData.key === 'outbox') {
+      return (
+        <>
+          {nodeData.title}
+          <Button size={'small'} style={{ marginLeft: '15px' }}>
+            outbox按钮
+          </Button>
+        </>
+      );
+    } else {
+      return (
+        <>
+          {nodeData.title}
+          <Button size={'small'} style={{ marginLeft: '15px' }}>
+            按钮
+          </Button>
+        </>
+      );
+    }
+  };
   return (
     <>
       <Input.Search
@@ -122,6 +153,7 @@ export default function IndexPage() {
         expandedKeys={expandedKeys}
         autoExpandParent={autoExpandParent}
         treeData={loop(treeData)}
+        titleRender={titleRender}
       />
     </>
   );
