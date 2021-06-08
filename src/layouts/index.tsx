@@ -35,7 +35,7 @@ const LayoutsIndex: FC = (props) => {
           <Menu
             theme="light"
             mode="inline"
-            defaultSelectedKeys={['30']}
+            defaultSelectedKeys={['31']}
             style={{ height: '100%' }}
           >
             <Menu.Item key="1">
@@ -127,6 +127,9 @@ const LayoutsIndex: FC = (props) => {
             </Menu.Item>
             <Menu.Item key="30">
               <Link to="/carousel">Carousel 走马灯</Link>
+            </Menu.Item>
+            <Menu.Item key="31">
+              <Link to="/treeSearch">Tree 搜索树</Link>
             </Menu.Item>
           </Menu>
         </Sider>
