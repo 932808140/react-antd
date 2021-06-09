@@ -17,7 +17,7 @@ const LayoutsIndex: FC = (props) => {
           breakpoint="lg"
           collapsedWidth="0"
           onBreakpoint={(broken) => {
-            console.log(broken);
+            //console.log(broken);
           }}
           onCollapse={(collapsed, type) => {
             console.log(collapsed, type);
@@ -35,7 +35,7 @@ const LayoutsIndex: FC = (props) => {
           <Menu
             theme="light"
             mode="inline"
-            defaultSelectedKeys={['31']}
+            defaultSelectedKeys={['32']}
             style={{ height: '100%' }}
           >
             <Menu.Item key="1">
@@ -130,6 +130,9 @@ const LayoutsIndex: FC = (props) => {
             </Menu.Item>
             <Menu.Item key="31">
               <Link to="/treeSearch">Tree 搜索树</Link>
+            </Menu.Item>
+            <Menu.Item key="32">
+              <Link to="/steps">steps 步骤条</Link>
             </Menu.Item>
           </Menu>
         </Sider>
