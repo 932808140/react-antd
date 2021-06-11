@@ -28,7 +28,12 @@ export default function IndexPage() {
   ];
   //选中框调用
   const onChange = (item: any) => {
-    console.log(item);
+    let checkListTemp: any[] = [];
+    item.map((v: any) => {
+      checkListTemp.push(v.title);
+    });
+    //console.log(checkListTemp.includes('Ant Design Title 2'));
+    setCheckList(checkListTemp);
   };
   return (
     <>
